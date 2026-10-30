@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Pembelajaran Interaktif PAI Kelas 1 - Bab 5: Nabi dan Rasul Panutanku</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & Comic Neue for child-friendly touch -->
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        comic: ['Comic Neue', 'cursive', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#0ea5e9',
+                        secondary: '#10b981',
+                        accent: '#f59e0b',
+                        funpink: '#ec4899',
+                        funpurple: '#8b5cf6',
+                        darkslate: '#1e293b',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f0fdf4 0%, #e0f2fe 100%);
+            color: #1e293b;
+            min-height: 100vh;
+        }
+        .font-comic {
+            font-family: 'Comic Neue', cursive, sans-serif;
+        }
+        /* Custom smooth transitions */
+        .transition-all {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        /* Bounce & Shake Animations */
+        @keyframes bounce-gentle {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        .animate-bounce-gentle {
+            animation: bounce-gentle 2s infinite ease-in-out;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-6px); }
+            40%, 80% { transform: translateX(6px); }
+        }
+        .animate-shake {
+            animation: shake 0.4s ease-in-out;
+        }
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 15px rgba(14, 165, 233, 0.4); }
+            50% { box-shadow: 0 0 25px rgba(14, 165, 233, 0.8); }
+        }
+        .pulse-glow {
+            animation: pulse-glow 2s infinite;
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen selection:bg-sky-200 selection:text-sky-900">
+
+    <!-- Top Notification Modal / Toast -->
+    <div id="toast-container" class="fixed top-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+    <!-- Main App Container -->
+    <div id="app" class="flex flex-col flex-grow max-w-7xl w-full mx-auto p-3 sm:p-5 lg:p-6">
+        
+        <!-- HEADER / NAVIGATION BAR -->
+        <header class="bg-white/90 backdrop-blur-md shadow-lg rounded-2xl p-4 mb-6 border border-sky-100 sticky top-4 z-40">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                
+                <!-- Logo & Title -->
+                <div class="flex items-center gap-3 cursor-pointer" onclick="switchView('beranda')">
+                    <div class="w-12 h-12 bg-gradient-to-tr from-sky-500 to-emerald-400 rounded-2xl flex items-center justify-center text-white text-2xl shadow-md">
+                        <i class="fa-solid fa-book-quran"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-comic text-xl sm:text-2xl font-bold text-sky-900 leading-tight">Nabi & Rasul Panutanku</h1>
+                        <p class="text-xs text-slate-500 font-medium">PAI Kelas 1 SD | Kurikulum Merdeka • M. Ripani, S.Pd</p>
+                    </div>
+                </div>
+
+                <!-- Navigation Menu Items -->
+                <nav class="flex flex-wrap items-center justify-center gap-1 sm:gap-2">
+                    <button onclick="switchView('beranda')" id="nav-beranda" class="nav-btn px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-1.5 transition-all bg-sky-500 text-white shadow-md">
+                        <i class="fa-solid fa-house"></i> <span class="hidden lg:inline">Beranda</span>
+                    </button>
+                    <button onclick="switchView('materi')" id="nav-materi" class="nav-btn px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-1.5 transition-all bg-slate-100 text-slate-700 hover:bg-sky-100">
+                        <i class="fa-solid fa-book-open"></i> <span class="hidden lg:inline">Materi</span>
+                    </button>
+                    <button onclick="switchView('aktivitas')" id="nav-aktivitas" class="nav-btn px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-1.5 transition-all bg-slate-100 text-slate-700 hover:bg-sky-100">
+                        <i class="fa-solid fa-puzzle-piece"></i> <span class="hidden lg:inline">Aktivitas</span>
+                    </button>
+                    <button onclick="switchView('game')" id="nav-game" class="nav-btn px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-1.5 transition-all bg-slate-100 text-slate-700 hover:bg-sky-100">
+                        <i class="fa-solid fa-gamepad"></i> <span class="hidden lg:inline">Game</span>
+                    </button>
+                    <button onclick="switchView('latihan')" id="nav-latihan" class="nav-btn px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-1.5 transition-all bg-slate-100 text-slate-700 hover:bg-sky-100">
+                        <i class="fa-solid fa-pen-to-square"></i> <span class="hidden lg:inline">Latihan</span>
+                    </button>
+                    <button onclick="switchView('kuis')" id="nav-kuis" class="nav-btn px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-1.5 transition-all bg-slate-100 text-slate-700 hover:bg-sky-100">
+                        <i class="fa-solid fa-award"></i> <span class="hidden lg:inline">Kuis</span>
+                    </button>
+                    <button onclick="switchView('hasil')" id="nav-hasil" class="nav-btn px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-1.5 transition-all bg-slate-100 text-slate-700 hover:bg-sky-100">
+                        <i class="fa-solid fa-trophy"></i> <span class="hidden lg:inline">Hasil</span>
+                    </button>
+                    <button onclick="switchView('refleksi')" id="nav-refleksi" class="nav-btn px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-1.5 transition-all bg-slate-100 text-slate-700 hover:bg-sky-100">
+                        <i class="fa-solid fa-face-smile"></i> <span class="hidden lg:inline">Refleksi</span>
+                    </button>
+                    <button onclick="switchView('petunjuk')" id="nav-petunjuk" class="nav-btn px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-1.5 transition-all bg-slate-100 text-slate-700 hover:bg-sky-100">
+                        <i class="fa-solid fa-circle-question"></i> <span class="hidden lg:inline">Petunjuk</span>
+                    </button>
+                </nav>
+
+            </div>
+            
+            <!-- Global Progress Bar -->
+            <div class="mt-3 flex items-center gap-3">
+                <span class="text-xs font-bold text-slate-600">Progres Belajar:</span>
+                <div class="flex-grow bg-slate-100 rounded-full h-3 overflow-hidden shadow-inner">
+                    <div id="global-progress" class="bg-gradient-to-r from-emerald-400 to-sky-500 h-full w-[10%] transition-all duration-500 rounded-full"></div>
+                </div>
+                <span id="global-progress-text" class="text-xs font-bold text-sky-600">10%</span>
+            </div>
+        </header>
+
+        <!-- MAIN CONTENT AREA -->
+        <main class="flex-grow flex flex-col">
+
+            <!-- 1. HALAMAN BERANDA / COVER -->
+            <section id="view-beranda" class="view-section flex flex-col gap-6 animate-fadeIn">
+                <div class="bg-gradient-to-br from-sky-500 via-indigo-600 to-emerald-500 rounded-3xl p-6 sm:p-10 text-white shadow-2xl relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8">
+                    <!-- Background Decorative Elements -->
+                    <div class="absolute -right-16 -top-16 w-64 h-64 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
+                    <div class="absolute -left-16 -bottom-16 w-64 h-64 bg-emerald-400/20 rounded-full blur-2xl pointer-events-none"></div>
+
+                    <div class="max-w-2xl z-10 flex flex-col gap-4 text-center md:text-left">
+                        <span class="bg-white/20 backdrop-blur-md px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider w-fit mx-auto md:mx-0 border border-white/30">
+                            <i class="fa-solid fa-star text-amber-300"></i> Bahan Ajar Interaktif Kurikulum Merdeka
+                        </span>
+                        <h2 class="font-comic text-3xl sm:text-5xl font-extrabold leading-tight drop-shadow-md">
+                            BAB 5: Nabi dan Rasul Panutanku
+                        </h2>
+                        <p class="text-sky-100 text-sm sm:text-base leading-relaxed">
+                            Mari mengenal hamba dan utusan Allah Swt., meneladani akhlak mulia mereka, mengetahui mukjizat para nabi, serta membiasakan hidup sederhana dalam keseharian!
+                        </p>
+                        
+                        <div class="flex flex-wrap items-center justify-center md:justify-start gap-4 mt-2">
+                            <div class="bg-white/15 backdrop-blur-md px-4 py-2 rounded-2xl border border-white/20 text-xs sm:text-sm">
+                                <i class="fa-solid fa-graduation-cap text-amber-300 mr-1"></i> Kelas 1 SD / Fase A
+                            </div>
+                            <div class="bg-white/15 backdrop-blur-md px-4 py-2 rounded-2xl border border-white/20 text-xs sm:text-sm">
+                                <i class="fa-solid fa-user-pen text-emerald-300 mr-1"></i> Pembuat: M. Ripani, S.Pd
+                            </div>
+                        </div>
+
+                        <div class="pt-4 flex flex-wrap gap-4 justify-center md:justify-start">
+                            <button onclick="switchView('materi')" class="pulse-glow bg-amber-400 hover:bg-amber-500 text-slate-900 font-comic text-xl font-extxl font-bold px-8 py-4 rounded-2xl shadow-xl flex items-center gap-3 transition-transform hover:scale-105 active:scale-95 cursor-pointer">
+                                <i class="fa-solid fa-play text-2xl"></i> MULAI BELAJAR SEKARANG
+                            </button>
+                            <button onclick="switchView('petunjuk')" class="bg-white/20 hover:bg-white/30 backdrop-blur-md text-white font-bold px-6 py-4 rounded-2xl border border-white/30 shadow-lg flex items-center gap-2 transition-all cursor-pointer">
+                                <i class="fa-solid fa-book-open-reader"></i> Petunjuk Guru & Murid
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Character Mascot Illustration Card -->
+                    <div class="z-10 bg-white/10 backdrop-blur-md p-6 rounded-3xl border border-white/20 shadow-2xl flex flex-col items-center text-center max-w-xs animate-bounce-gentle">
+                        <div class="w-24 h-24 bg-gradient-to-tr from-amber-300 to-amber-500 rounded-full flex items-center justify-center text-5xl shadow-inner mb-3 border-4 border-white">
+                            👦🏻
+                        </div>
+                        <h3 class="font-comic text-xl font-bold text-amber-200">Ahmad & Fatimah</h3>
+                        <p class="text-xs text-sky-100 mt-1">"Hai teman-teman! Ayo belajar kisah 25 Nabi dan Rasul bersama kami dengan gembira!"</p>
+                        <div class="mt-4 w-full bg-white/20 py-2 rounded-xl text-xs font-bold text-emerald-300 flex items-center justify-center gap-1">
+                            <i class="fa-solid fa-heart"></i> Mindful • Meaningful • Joyful
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Access Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-2">
+                    <div onclick="switchView('materi')" class="bg-white p-5 rounded-2xl shadow-sm hover:shadow-md transition-all border border-slate-100 flex items-center gap-4 cursor-pointer group">
+                        <div class="w-14 h-14 bg-sky-100 text-sky-600 rounded-2xl flex items-center justify-center text-2xl group-hover:bg-sky-500 group-hover:text-white transition-all">
+                            <i class="fa-solid fa-book"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-800">Materi Inti</h4>
+                            <p class="text-xs text-slate-500">4 Sub-materi lengkap</p>
+                        </div>
+                    </div>
+                    <div onclick="switchView('aktivitas')" class="bg-white p-5 rounded-2xl shadow-sm hover:shadow-md transition-all border border-slate-100 flex items-center gap-4 cursor-pointer group">
+                        <div class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center text-2xl group-hover:bg-emerald-500 group-hover:text-white transition-all">
+                            <i class="fa-solid fa-puzzle-piece"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-800">Aktivitas Seru</h4>
+                            <p class="text-xs text-slate-500">Pasangkan & Susun Nama</p>
+                        </div>
+                    </div>
+                    <div onclick="switchView('game')" class="bg-white p-5 rounded-2xl shadow-sm hover:shadow-md transition-all border border-slate-100 flex items-center gap-4 cursor-pointer group">
+                        <div class="w-14 h-14 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center text-2xl group-hover:bg-amber-500 group-hover:text-white transition-all">
+                            <i class="fa-solid fa-gamepad"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-800">Game Edukasi</h4>
+                            <p class="text-xs text-slate-500">Tebak Mukjizat Nabi</p>
+                        </div>
+                    </div>
+                    <div onclick="switchView('kuis')" class="bg-white p-5 rounded-2xl shadow-sm hover:shadow-md transition-all border border-slate-100 flex items-center gap-4 cursor-pointer group">
+                        <div class="w-14 h-14 bg-pink-100 text-pink-600 rounded-2xl flex items-center justify-center text-2xl group-hover:bg-pink-500 group-hover:text-white transition-all">
+                            <i class="fa-solid fa-award"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-800">Kuis Akhir</h4>
+                            <p class="text-xs text-slate-500">Uji Pemahamanmu</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. HALAMAN MATERI -->
+            <section id="view-materi" class="view-section hidden flex flex-col gap-6 animate-fadeIn">
+                <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-100">
+                    <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pb-6 border-b border-slate-100">
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-wider text-sky-600 bg-sky-50 px-3 py-1 rounded-full">Pusat Belajar Materi</span>
+                            <h2 class="font-comic text-2xl sm:text-3xl font-bold text-slate-800 mt-2">Bab 5: Nabi dan Rasul Panutanku</h2>
+                        </div>
+                        <!-- Sub-materi Tab Selector -->
+                        <div class="flex flex-wrap gap-2">
+                            <button onclick="switchMateriTab('subA')" id="btn-subA" class="materi-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-sky-500 text-white shadow-sm transition-all">A. Kenal Nabi</button>
+                            <button onclick="switchMateriTab('subB')" id="btn-subB" class="materi-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-all">B. 25 Nabi</button>
+                            <button onclick="switchMateriTab('subC')" id="btn-subC" class="materi-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-all">C. Mukjizat</button>
+                            <button onclick="switchMateriTab('subD')" id="btn-subD" class="materi-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-all">D. Sederhana</button>
+                            <button onclick="switchMateriTab('subE')" id="btn-subE" class="materi-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-amber-100 text-amber-800 hover:bg-amber-200 transition-all"><i class="fa-solid fa-video mr-1"></i> Video & Lagu</button>
+                        </div>
+                    </div>
+
+                    <!-- Materi Content Container -->
+                    <div id="materi-content-container" class="mt-6">
+                        <!-- Content injected via JS -->
+                    </div>
+
+                    <!-- Navigation inside materi -->
+                    <div class="flex items-center justify-between mt-8 pt-6 border-t border-slate-100">
+                        <button onclick="prevMateri()" id="prev-materi-btn" class="px-5 py-2.5 rounded-xl border border-slate-200 text-slate-600 font-bold text-sm hover:bg-slate-50 flex items-center gap-2 disabled:opacity-30" disabled>
+                            <i class="fa-solid fa-arrow-left"></i> Sebelumnya
+                        </button>
+                        <button onclick="nextMateri()" id="next-materi-btn" class="px-5 py-2.5 rounded-xl bg-sky-500 text-white font-bold text-sm hover:bg-sky-600 shadow-md flex items-center gap-2">
+                            Selanjutnya <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. HALAMAN AKTIVITAS -->
+            <section id="view-aktivitas" class="view-section hidden flex flex-col gap-6 animate-fadeIn">
+                <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-100">
+                    <div class="flex items-center justify-between pb-6 border-b border-slate-100">
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-wider text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full">Aktivitas Interaktif</span>
+                            <h2 class="font-comic text-2xl sm:text-3xl font-bold text-slate-800 mt-2">Pasangkan Nabi dan Mukjizatnya!</h2>
+                        </div>
+                        <button onclick="resetAktivitas()" class="px-4 py-2 rounded-xl bg-slate-100 text-slate-700 hover:bg-slate-200 text-xs font-bold flex items-center gap-2">
+                            <i class="fa-solid fa-rotate-right"></i> Acak Ulang
+                        </button>
+                    </div>
+
+                    <p class="text-slate-600 text-sm mt-4">
+                        Tarik atau klik salah satu nama nabi di sebelah kiri, lalu pasangkan dengan mukjizat yang sesuai di sebelah kanan!
+                    </p>
+
+                    <!-- Matching Game Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                        <div class="bg-sky-50 p-5 rounded-2xl border border-sky-100 flex flex-col gap-3">
+                            <h3 class="font-bold text-sky-900 text-sm flex items-center gap-2">
+                                <i class="fa-solid fa-user-tie"></i> Pilih Nama Nabi / Rasul:
+                            </h3>
+                            <div id="matching-nabi-list" class="flex flex-col gap-3">
+                                <!-- Populated by JS -->
+                            </div>
+                        </div>
+
+                        <div class="bg-emerald-50 p-5 rounded-2xl border border-emerald-100 flex flex-col gap-3">
+                            <h3 class="font-bold text-emerald-900 text-sm flex items-center gap-2">
+                                <i class="fa-solid fa-wand-magic-sparkles"></i> Pilih Mukjizat yang Sesuai:
+                            </h3>
+                            <div id="matching-mukjizat-list" class="flex flex-col gap-3">
+                                <!-- Populated by JS -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="matching-result-alert" class="mt-6 p-4 rounded-2xl bg-slate-50 border border-slate-200 text-center hidden">
+                        <!-- Feedback alert -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. HALAMAN GAME (Tebak 25 Nabi / Flashcard) -->
+            <section id="view-game" class="view-section hidden flex flex-col gap-6 animate-fadeIn">
+                <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-100 text-center">
+                    <span class="text-xs font-bold uppercase tracking-wider text-amber-600 bg-amber-50 px-3 py-1 rounded-full">Mini Game Edukasi</span>
+                    <h2 class="font-comic text-2xl sm:text-3xl font-bold text-slate-800 mt-2">Kuis Kilat Urutan 25 Nabi & Rasul</h2>
+                    <p class="text-slate-600 text-sm mt-2 max-w-xl mx-auto">
+                        Uji kemampuanmu dalam menghafal urutan dan nama-nama 25 nabi dan rasul yang wajib diketahui!
+                    </p>
+
+                    <div id="game-card-container" class="max-w-md mx-auto mt-8 bg-gradient-to-tr from-sky-50 to-emerald-50 p-8 rounded-3xl border border-sky-200 shadow-lg flex flex-col items-center">
+                        <span id="game-badge" class="bg-sky-500 text-white text-xs font-bold px-3 py-1 rounded-full mb-3">Soal No. 1 dari 5</span>
+                        <div id="game-icon" class="text-5xl text-sky-600 mb-3">👑</div>
+                        <h3 id="game-question" class="font-comic text-xl font-bold text-slate-800 text-center mb-6">Siapakah Nabi pertama yang diciptakan Allah Swt.?</h3>
+                        
+                        <div id="game-options" class="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full">
+                            <!-- Options injected via JS -->
+                        </div>
+                    </div>
+
+                    <div id="game-score-box" class="mt-6 text-sm font-bold text-slate-700">
+                        Skor Kamu: <span id="current-game-score" class="text-emerald-600 text-lg">0</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 5. HALAMAN LATIHAN -->
+            <section id="view-latihan" class="view-section hidden flex flex-col gap-6 animate-fadeIn">
+                <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-100">
+                    <div class="flex items-center justify-between pb-6 border-b border-slate-100">
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-wider text-sky-600 bg-sky-50 px-3 py-1 rounded-full">Latihan Formatif</span>
+                            <h2 class="font-comic text-2xl sm:text-3xl font-bold text-slate-800 mt-2">Uji Pemahaman Cepat</h2>
+                        </div>
+                        <span class="text-xs font-bold text-slate-500 bg-slate-100 px-3 py-1.5 rounded-xl">Feedback Langsung</span>
+                    </div>
+
+                    <div id="latihan-container" class="mt-6 flex flex-col gap-6">
+                        <!-- Populated via JS -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- 6. HALAMAN KUIS AKHIR -->
+            <section id="view-kuis" class="view-section hidden flex flex-col gap-6 animate-fadeIn">
+                <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-100">
+                    <div id="quiz-start-screen" class="text-center py-8">
+                        <div class="w-20 h-20 bg-pink-100 text-pink-600 rounded-3xl mx-auto flex items-center justify-center text-3xl shadow-md mb-4">
+                            <i class="fa-solid fa-award"></i>
+                        </div>
+                        <h2 class="font-comic text-3xl font-bold text-slate-800">Kuis Evaluasi Akhir Bab 5</h2>
+                        <p class="text-slate-600 text-sm mt-2 max-w-md mx-auto">
+                            Kuis ini terdiri dari 10 soal pilihan ganda tentang Nabi dan Rasul Panutanku. Jawablah dengan teliti dan raih bintang tertinggimu!
+                        </p>
+                        <button onclick="startQuiz()" class="mt-6 bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-comic text-lg font-bold px-8 py-3.5 rounded-2xl shadow-lg transition-transform hover:scale-105 cursor-pointer">
+                            Mulai Kuis Sekarang <i class="fa-solid fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+
+                    <div id="quiz-question-screen" class="hidden">
+                        <div class="flex items-center justify-between mb-4">
+                            <span id="quiz-counter" class="text-xs font-bold text-slate-500 bg-slate-100 px-3 py-1 rounded-full">Soal 1 dari 10</span>
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-clock text-amber-500"></i>
+                                <span id="quiz-timer" class="text-xs font-bold text-slate-700">00:00</span>
+                            </div>
+                        </div>
+
+                        <!-- Progress Bar Quiz -->
+                        <div class="w-full bg-slate-100 rounded-full h-2.5 mb-6 overflow-hidden">
+                            <div id="quiz-progress-bar" class="bg-pink-500 h-full w-[10%]" style="width: 10%"></div>
+                        </div>
+
+                        <h3 id="quiz-question-text" class="font-comic text-xl sm:text-2xl font-bold text-slate-800 mb-6">Pertanyaan Kuis...</h3>
+
+                        <div id="quiz-options-container" class="grid grid-cols-1 gap-3">
+                            <!-- Options injected by JS -->
+                        </div>
+
+                        <div id="quiz-explanation-box" class="mt-6 p-4 rounded-2xl bg-sky-50 border border-sky-100 hidden text-sm text-sky-900">
+                            <!-- Explanation injected by JS -->
+                        </div>
+
+                        <div class="mt-6 flex justify-end">
+                            <button id="quiz-next-btn" onclick="nextQuizQuestion()" class="hidden px-6 py-3 bg-sky-500 hover:bg-sky-600 text-white font-bold rounded-xl shadow-md transition-all">
+                                Soal Selanjutnya <i class="fa-solid fa-arrow-right ml-2"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 7. HALAMAN HASIL -->
+            <section id="view-hasil" class="view-section hidden flex flex-col gap-6 animate-fadeIn">
+                <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-100 text-center">
+                    <div id="hasil-badge-icon" class="w-24 h-24 bg-amber-100 text-amber-500 rounded-full mx-auto flex items-center justify-center text-4xl shadow-md mb-4 animate-bounce-gentle">
+                        🏆
+                    </div>
+                    <h2 class="font-comic text-3xl font-bold text-slate-800">Hasil Belajar Kamu</h2>
+                    <p id="hasil-status-title" class="text-emerald-600 font-bold text-lg mt-1">Luar Biasa, Hebat Sekali!</p>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-2xl mx-auto mt-6">
+                        <div class="bg-sky-50 p-4 rounded-2xl border border-sky-100">
+                            <span class="text-xs text-sky-600 font-bold block">Skor Kuis Akhir</span>
+                            <span id="hasil-score-val" class="font-comic text-3xl font-extrabold text-sky-900 mt-1 block">100</span>
+                        </div>
+                        <div class="bg-emerald-50 p-4 rounded-2xl border border-emerald-100">
+                            <span class="text-xs text-emerald-600 font-bold block">Jawaban Benar</span>
+                            <span id="hasil-correct-val" class="font-comic text-3xl font-extrabold text-emerald-900 mt-1 block">10 / 10</span>
+                        </div>
+                        <div class="bg-amber-50 p-4 rounded-2xl border border-amber-100">
+                            <span class="text-xs text-amber-600 font-bold block">Status Badge</span>
+                            <span id="hasil-badge-val" class="font-comic text-xl font-extrabold text-amber-800 mt-1 block">Bintang 5 ⭐</span>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 flex flex-wrap justify-center gap-4">
+                        <button onclick="switchView('kuis'); startQuiz();" class="px-6 py-3 bg-sky-500 hover:bg-sky-600 text-white font-bold rounded-xl shadow-md transition-all">
+                            <i class="fa-solid fa-rotate-right mr-2"></i> Ulangi Kuis
+                        </button>
+                        <button onclick="switchView('materi')" class="px-6 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl transition-all">
+                            <i class="fa-solid fa-book-open mr-2"></i> Baca Ulang Materi
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 8. HALAMAN REFLEKSI -->
+            <section id="view-refleksi" class="view-section hidden flex flex-col gap-6 animate-fadeIn">
+                <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-100">
+                    <div class="text-center max-w-lg mx-auto">
+                        <span class="text-xs font-bold uppercase tracking-wider text-pink-600 bg-pink-50 px-3 py-1 rounded-full">Refleksi Pembelajaran</span>
+                        <h2 class="font-comic text-2xl sm:text-3xl font-bold text-slate-800 mt-2">Bagaimana Perasaanmu Hari Ini?</h2>
+                        <p class="text-slate-600 text-sm mt-2">Pilih emoji yang menggambarkan perasaanmu setelah belajar tentang Nabi dan Rasul!</p>
+
+                        <!-- Emoji Rating Options -->
+                        <div class="flex justify-center gap-4 my-6">
+                            <button onclick="setRefleksiEmoji('🤩', this)" class="ref-emoji-btn w-16 h-16 rounded-2xl bg-slate-50 hover:bg-amber-100 border-2 border-slate-200 text-3xl flex items-center justify-center transition-all cursor-pointer">🤩</button>
+                            <button onclick="setRefleksiEmoji('😊', this)" class="ref-emoji-btn w-16 h-16 rounded-2xl bg-slate-50 hover:bg-emerald-100 border-2 border-slate-200 text-3xl flex items-center justify-center transition-all cursor-pointer">😊</button>
+                            <button onclick="setRefleksiEmoji('🤔', this)" class="ref-emoji-btn w-16 h-16 rounded-2xl bg-slate-50 hover:bg-sky-100 border-2 border-slate-200 text-3xl flex items-center justify-center transition-all cursor-pointer">🤔</button>
+                        </div>
+
+                        <div class="text-left flex flex-col gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">Apa hal paling seru yang kamu pelajari di Bab ini?</label>
+                                <textarea id="refleksi-text-1" rows="2" class="w-full p-3 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-sky-500" placeholder="Misal: Senang tahu mukjizat Nabi Nuh membuat kapal besar!"></textarea>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">Bagian mana yang ingin kamu pelajari lebih lanjut?</label>
+                                <textarea id="refleksi-text-2" rows="2" class="w-full p-3 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-sky-500" placeholder="Misal: Ingin menghafal lebih lancar 25 nabi dan rasul."></textarea>
+                            </div>
+                            <button onclick="submitRefleksi()" class="w-full py-3.5 bg-emerald-500 hover:bg-emerald-600 text-white font-bold rounded-xl shadow-md transition-all">
+                                Simpan Refleksi & Kirim
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 9. HALAMAN PETUNJUK -->
+            <section id="view-petunjuk" class="view-section hidden flex flex-col gap-6 animate-fadeIn">
+                <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-100">
+                    <span class="text-xs font-bold uppercase tracking-wider text-sky-600 bg-sky-50 px-3 py-1 rounded-full">Panduan Penggunaan</span>
+                    <h2 class="font-comic text-2xl sm:text-3xl font-bold text-slate-800 mt-2">Petunjuk Media Pembelajaran</h2>
+                    <p class="text-slate-600 text-sm mt-1">Panduan praktis bagi Murid, Guru, dan Orang Tua dalam menggunakan bahan ajar interaktif ini.</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+                        <div class="bg-sky-50 p-5 rounded-2xl border border-sky-100">
+                            <div class="w-10 h-10 bg-sky-500 text-white rounded-xl flex items-center justify-center font-bold mb-3">1</div>
+                            <h3 class="font-bold text-sky-900 mb-2">Untuk Peserta Didik</h3>
+                            <ul class="text-xs text-slate-700 space-y-2 list-disc pl-4">
+                                <li>Klik menu navigasi di atas untuk menjelajahi materi.</li>
+                                <li>Ikuti kuis dan aktivitas seru dengan membaca instruksi saksama.</li>
+                                <li>Mintalah pendampingan orang tua jika menemui kesulitan.</li>
+                            </ul>
+                        </div>
+                        <div class="bg-emerald-50 p-5 rounded-2xl border border-emerald-100">
+                            <div class="w-10 h-10 bg-emerald-500 text-white rounded-xl flex items-center justify-center font-bold mb-3">2</div>
+                            <h3 class="font-bold text-emerald-900 mb-2">Untuk Guru (Pendidik)</h3>
+                            <ul class="text-xs text-slate-700 space-y-2 list-disc pl-4">
+                                <li>Media ini berbasis Kurikulum Merdeka (Mindful, Meaningful, Joyful).</li>
+                                <li>Dapat digunakan di Papan Interaktif (FID), Laptop, atau Smartphone.</li>
+                                <li>Mendukung asesmen formatif (Latihan, Kuis) dan sumatif.</li>
+                            </ul>
+                        </div>
+                        <div class="bg-amber-50 p-5 rounded-2xl border border-amber-100">
+                            <div class="w-10 h-10 bg-amber-500 text-white rounded-xl flex items-center justify-center font-bold mb-3">3</div>
+                            <h3 class="font-bold text-amber-900 mb-2">Untuk Orang Tua</h3>
+                            <ul class="text-xs text-slate-700 space-y-2 list-disc pl-4">
+                                <li>Dampingi anak saat belajar menghafal 25 nabi dan rasul.</li>
+                                <li>Isilah kolom komentar/refleksi bersama anak di akhir sesi.</li>
+                                <li>Dukung pembiasaan perilaku sederhana dalam kehidupan sehari-hari.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- FOOTER -->
+        <footer class="mt-8 text-center text-xs text-slate-500 pb-4 border-t border-slate-200/60 pt-4">
+            <p>Media Pembelajaran Interaktif PAI Kelas 1 SD • Kurikulum Merdeka • Bab 5: Nabi dan Rasul Panutanku</p>
+            <p class="mt-1 font-semibold text-slate-600">Dibuat oleh: <span class="text-sky-600">M. Ripani, S.Pd</span></p>
+        </footer>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // State Management
+        let currentView = 'beranda';
+        let currentMateriTab = 'subA';
+        let globalProgress = 15;
+
+        // Toast Notification System (Replaces alert/confirm)
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            
+            let bgClass = 'bg-emerald-600';
+            let icon = 'fa-circle-check';
+            if (type === 'error') {
+                bgClass = 'bg-rose-600';
+                icon = 'fa-circle-exclamation';
+            } else if (type === 'info') {
+                bgClass = 'bg-sky-600';
+                icon = 'fa-circle-info';
+            }
+
+            toast.className = `${bgClass} text-white px-4 py-3 rounded-xl shadow-lg text-sm font-bold flex items-center gap-3 pointer-events-auto transform translate-y-2 opacity-0 transition-all duration-300`;
+            toast.innerHTML = `<i class="fa-solid ${icon} text-lg"></i> <span>${message}</span>`;
+            
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.classList.remove('translate-y-2', 'opacity-0');
+            }, 10);
+
+            setTimeout(() => {
+                toast.classList.add('translate-y-2', 'opacity-0');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // View Switcher
+        function switchView(viewId) {
+            currentView = viewId;
+            document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`view-${viewId}`).classList.remove('hidden');
+
+            // Update Nav Active state
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.className = "nav-btn px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-1.5 transition-all bg-slate-100 text-slate-700 hover:bg-sky-100";
+            });
+            const activeNav = document.getElementById(`nav-${viewId}`);
+            if (activeNav) {
+                activeNav.className = "nav-btn px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-1.5 transition-all bg-sky-500 text-white shadow-md";
+            }
+
+            // Update Progress based on view
+            const progressMap = {
+                'beranda': 15,
+                'materi': 35,
+                'aktivitas': 50,
+                'game': 65,
+                'latihan': 75,
+                'kuis': 85,
+                'hasil': 95,
+                'refleksi': 98,
+                'petunjuk': 100
+            };
+            globalProgress = progressMap[viewId] || 20;
+            document.getElementById('global-progress').style.width = `${globalProgress}%`;
+            document.getElementById('global-progress-text').innerText = `${globalProgress}%`;
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Materi Sub-tabs Content Data
+        const materiData = {
+            subA: `
+                <div class="space-y-6">
+                    <div class="bg-sky-50 p-6 rounded-2xl border border-sky-100 flex flex-col md:flex-row items-center gap-6">
+                        <div class="w-24 h-24 bg-sky-500 text-white rounded-2xl flex items-center justify-center text-4xl shadow-md flex-shrink-0">
+                            📖
+                        </div>
+                        <div>
+                            <h3 class="font-comic text-xl font-bold text-sky-900">A. Mengenal Nabi dan Rasul</h3>
+                            <p class="text-sm text-slate-700 mt-2 leading-relaxed">
+                                Nabi dan rasul adalah hamba pilihan Allah Swt. yang diutus untuk menyampaikan ajaran kebaikan kepada umat manusia. Menyakini adanya nabi dan rasul termasuk dalam rukun iman yang keempat.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                            <h4 class="font-bold text-slate-800 text-sm mb-2 flex items-center gap-2">
+                                <i class="fa-solid fa-circle-check text-emerald-500"></i> Pengertian Nabi & Rasul
+                            </h4>
+                            <ul class="text-xs text-slate-600 space-y-2 list-disc pl-4">
+                                <li><b>Nabi:</b> Diberi wahyu oleh Allah untuk dirinya sendiri dan tidak wajib menyampaikan kepada umat.</li>
+                                <li><b>Rasul:</b> Diberi wahyu oleh Allah dan wajib menyampaikan kepada umatnya.</li>
+                            </ul>
+                        </div>
+                        <div class="bg-emerald-50 p-5 rounded-2xl border border-emerald-100 shadow-sm">
+                            <h4 class="font-bold text-emerald-900 text-sm mb-2 flex items-center gap-2">
+                                <i class="fa-solid fa-star text-amber-500"></i> Sikap Terpuji Kita
+                            </h4>
+                            <p class="text-xs text-emerald-800 leading-relaxed">
+                                Kita wajib meyakini bahwa nabi dan rasul adalah utusan Allah Swt., serta meneladani akhlak mulia mereka seperti jujur, amanah, rajin salat, rajin mengaji, dan berbakti kepada orang tua.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            `,
+            subB: `
+                <div class="space-y-6">
+                    <div class="bg-emerald-50 p-6 rounded-2xl border border-emerald-100 flex flex-col md:flex-row items-center gap-6">
+                        <div class="w-24 h-24 bg-emerald-500 text-white rounded-2xl flex items-center justify-center text-4xl shadow-md flex-shrink-0">
+                            🌟
+                        </div>
+                        <div>
+                            <h3 class="font-comic text-xl font-bold text-emerald-900">B. 25 Nama Nabi dan Rasul</h3>
+                            <p class="text-sm text-slate-700 mt-2 leading-relaxed">
+                                Jumlah nabi dan rasul sangat banyak, namun yang wajib diketahui dan dihafal oleh setiap Muslim ada 25 orang, mulai dari Nabi Adam a.s. hingga Nabi Muhammad saw.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+                        ${[
+                            "1. Adam a.s.", "2. Idris a.s.", "3. Nuh a.s.", "4. Hud a.s.", "5. Salih a.s.",
+                            "6. Ibrahim a.s.", "7. Lut a.s.", "8. Ismail a.s.", "9. Ishak a.s.", "10. Ya'qub a.s.",
+                            "11. Yusuf a.s.", "12. Ayyub a.s.", "13. Syu'aib a.s.", "14. Musa a.s.", "15. Harun a.s.",
+                            "16. Zulkifli a.s.", "17. Daud a.s.", "18. Sulaiman a.s.", "19. Ilyas a.s.", "20. Ilyasa a.s.",
+                            "21. Yunus a.s.", "22. Zakaria a.s.", "23. Yahya a.s.", "24. Isa a.s.", "25. Muhammad saw."
+                        ].map((nabi, idx) => `
+                            <div class="bg-slate-50 hover:bg-sky-50 border border-slate-200 hover:border-sky-300 p-3 rounded-xl text-center text-xs font-bold text-slate-700 transition-all shadow-xs">
+                                ${nabi}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `,
+            subC: `
+                <div class="space-y-6">
+                    <div class="bg-amber-50 p-6 rounded-2xl border border-amber-100 flex flex-col md:flex-row items-center gap-6">
+                        <div class="w-24 h-24 bg-amber-500 text-white rounded-2xl flex items-center justify-center text-4xl shadow-md flex-shrink-0">
+                            ✨
+                        </div>
+                        <div>
+                            <h3 class="font-comic text-xl font-bold text-amber-900">C. Mukjizat Nabi dan Rasul</h3>
+                            <p class="text-sm text-slate-700 mt-2 leading-relaxed">
+                                Mukjizat adalah perkara luar biasa yang diberikan Allah Swt. kepada para nabi dan rasul untuk membuktikan kebenaran risalah mereka.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col items-center text-center">
+                            <div class="text-3xl mb-2">🚢</div>
+                            <h4 class="font-bold text-slate-800 text-sm">Nabi Nuh a.s.</h4>
+                            <p class="text-xs text-slate-600 mt-1">Membuat kapal yang sangat besar atas izin Allah Swt.</p>
+                        </div>
+                        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col items-center text-center">
+                            <div class="text-3xl mb-2">🐍</div>
+                            <h4 class="font-bold text-slate-800 text-sm">Nabi Musa a.s.</h4>
+                            <p class="text-xs text-slate-600 mt-1">Tongkat yang berubah menjadi ular besar.</p>
+                        </div>
+                        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col items-center text-center">
+                            <div class="text-3xl mb-2">📖</div>
+                            <h4 class="font-bold text-slate-800 text-sm">Nabi Muhammad saw.</h4>
+                            <p class="text-xs text-slate-600 mt-1">Menerima Kitab suci Al-Qur'an sebagai mukjizat terbesar.</p>
+                        </div>
+                    </div>
+                </div>
+            `,
+            subD: `
+                <div class="space-y-6">
+                    <div class="bg-pink-50 p-6 rounded-2xl border border-pink-100 flex flex-col md:flex-row items-center gap-6">
+                        <div class="w-24 h-24 bg-pink-500 text-white rounded-2xl flex items-center justify-center text-4xl shadow-md flex-shrink-0">
+                            🌱
+                        </div>
+                        <div>
+                            <h3 class="font-comic text-xl font-bold text-pink-900">D. Perilaku Sederhana Nabi dan Rasul</h3>
+                            <p class="text-sm text-slate-700 mt-2 leading-relaxed">
+                                Para nabi dan rasul selalu hidup sederhana dan tidak suka berlebihan. Sebagai anak saleh, kita meneladani mereka dengan cara rajin menabung, menyisihkan uang saku untuk berinfak, dan hidup hemat.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-start gap-4">
+                            <div class="text-2xl text-pink-500"><i class="fa-solid fa-piggy-bank"></i></div>
+                            <div>
+                                <h4 class="font-bold text-slate-800 text-sm">Suka Menabung</h4>
+                                <p class="text-xs text-slate-600 mt-1">Sebagian uang saku tidak dihabiskan, melainkan dimasukkan ke celengan.</p>
+                            </div>
+                        </div>
+                        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-start gap-4">
+                            <div class="text-2xl text-emerald-500"><i class="fa-solid fa-hand-holding-heart"></i></div>
+                            <div>
+                                <h4 class="font-bold text-slate-800 text-sm">Gemar Berinfak</h4>
+                                <p class="text-xs text-slate-600 mt-1">Menyisihkan uang untuk kotak amal di sekolah atau membantu teman yang membutuhkan.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `,
+            subE: `
+                <div class="space-y-6 text-center">
+                    <div class="bg-gradient-to-tr from-sky-500 to-indigo-600 text-white p-8 rounded-3xl shadow-lg">
+                        <h3 class="font-comic text-2xl font-bold mb-2">Video & Lagu Pembelajaran</h3>
+                        <p class="text-sm text-sky-100 max-w-lg mx-auto mb-6">
+                            Saksikan video kisah 25 nabi dan rasul serta lagu edukasi "Siapa Rasulullah" untuk menambah semangat belajarmu!
+                        </p>
+                        <a href="https://youtu.be/qx8lxK0_OkE?si=9JQnSNRdyHsBKuQE" target="_blank" class="inline-flex items-center gap-3 bg-red-600 hover:bg-red-700 text-white font-bold px-8 py-4 rounded-2xl shadow-xl transition-transform hover:scale-105">
+                            <i class="fa-brands fa-youtube text-2xl"></i> Tonton Video Pembelajaran di YouTube
+                        </a>
+                    </div>
+                </div>
+            `
+        };
+
+        function switchMateriTab(tabId) {
+            currentMateriTab = tabId;
+            document.querySelectorAll('.materi-tab').forEach(btn => {
+                btn.className = "materi-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-all";
+            });
+            document.getElementById(`btn-${tabId}`).className = "materi-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-sky-500 text-white shadow-sm transition-all";
+            document.getElementById('materi-content-container').innerHTML = materiData[tabId];
+        }
+
+        function nextMateri() {
+            const tabs = ['subA', 'subB', 'subC', 'subD', 'subE'];
+            const currentIndex = tabs.indexOf(currentMateriTab);
+            if (currentIndex < tabs.length - 1) {
+                switchMateriTab(tabs[currentIndex + 1]);
+            } else {
+                switchView('aktivitas');
+            }
+        }
+
+        function prevMateri() {
+            const tabs = ['subA', 'subB', 'subC', 'subD', 'subE'];
+            const currentIndex = tabs.indexOf(currentMateriTab);
+            if (currentIndex > 0) {
+                switchMateriTab(tabs[currentIndex - 1]);
+            }
+        }
+
+        // Initialize default tab
+        document.getElementById('materi-content-container').innerHTML = materiData.subA;
+
+        // Matching Activity Logic
+        const matchingPairs = [
+            { nabi: "Nabi Nuh a.s.", mukjizat: "Membuat Kapal Besar" },
+            { nabi: "Nabi Musa a.s.", mukjizat: "Tongkat Menjadi Ular Besar" },
+            { nabi: "Nabi Muhammad saw.", mukjizat: "Menerima Kitab Al-Qur'an" }
+        ];
+
+        let selectedNabi = null;
+        let matchedCount = 0;
+
+        function initAktivitas() {
+            matchedCount = 0;
+            selectedNabi = null;
+            const nabiList = document.getElementById('matching-nabi-list');
+            const mukjizatList = document.getElementById('matching-mukjizat-list');
+            const alertBox = document.getElementById('matching-result-alert');
+            alertBox.classList.add('hidden');
+
+            nabiList.innerHTML = '';
+            mukjizatList.innerHTML = '';
+
+            // Shuffle arrays
+            const shuffledNabis = [...matchingPairs].sort(() => Math.random() - 0.5);
+            const shuffledMukjizats = [...matchingPairs].sort(() => Math.random() - 0.5);
+
+            shuffledNabis.forEach(item => {
+                const btn = document.createElement('button');
+                btn.className = "p-3 bg-white hover:bg-sky-100 border border-slate-200 rounded-xl font-bold text-xs sm:text-sm text-slate-800 text-left transition-all flex items-center justify-between";
+                btn.innerHTML = `<span>${item.nabi}</span> <i class="fa-solid fa-hand-pointer text-sky-500"></i>`;
+                btn.onclick = () => selectNabi(item.nabi, btn);
+                btn.dataset.nabi = item.nabi;
+                nabiList.appendChild(btn);
+            });
+
+            shuffledMukjizats.forEach(item => {
+                const btn = document.createElement('button');
+                btn.className = "p-3 bg-white hover:bg-emerald-100 border border-slate-200 rounded-xl font-bold text-xs sm:text-sm text-slate-800 text-left transition-all flex items-center justify-between";
+                btn.innerHTML = `<span>${item.mukjizat}</span> <i class="fa-solid fa-circle text-xs text-slate-300"></i>`;
+                btn.onclick = () => selectMukjizat(item.mukjizat, btn);
+                btn.dataset.mukjizat = item.mukjizat;
+                mukjizatList.appendChild(btn);
+            });
+        }
+
+        function selectNabi(nabi, element) {
+            document.querySelectorAll('#matching-nabi-list button').forEach(b => b.classList.remove('ring-2', 'ring-sky-500', 'bg-sky-100'));
+            element.classList.add('ring-2', 'ring-sky-500', 'bg-sky-100');
+            selectedNabi = nabi;
+        }
+
+        function selectMukjizat(mukjizat, element) {
+            if (!selectedNabi) {
+                showToast("Pilih nama Nabi di sebelah kiri terlebih dahulu!", "info");
+                return;
+            }
+
+            const correctPair = matchingPairs.find(p => p.nabi === selectedNabi);
+            if (correctPair && correctPair.mukjizat === mukjizat) {
+                showToast("Benar! Pasangan tepat sekali.", "success");
+                element.classList.add('bg-emerald-500', 'text-white', 'pointer-events-none');
+                element.innerHTML = `<span>${mukjizat}</span> <i class="fa-solid fa-check"></i>`;
+                
+                // Disable corresponding nabi button
+                document.querySelectorAll('#matching-nabi-list button').forEach(b => {
+                    if (b.dataset.nabi === selectedNabi) {
+                        b.classList.add('bg-emerald-500', 'text-white', 'pointer-events-none');
+                        b.innerHTML = `<span>${selectedNabi}</span> <i class="fa-solid fa-check"></i>`;
+                    }
+                });
+
+                selectedNabi = null;
+                matchedCount++;
+
+                if (matchedCount === matchingPairs.length) {
+                    const alertBox = document.getElementById('matching-result-alert');
+                    alertBox.classList.remove('hidden');
+                    alertBox.className = "mt-6 p-4 rounded-2xl bg-emerald-100 border border-emerald-300 text-emerald-900 font-bold text-sm text-center";
+                    alertBox.innerHTML = `🎉 Hebat! Kamu berhasil memasangkan semua nabi dan mukjizatnya dengan benar!`;
+                }
+            } else {
+                showToast("Kurang tepat, ayo coba pasangkan lagi!", "error");
+                element.classList.add('animate-shake', 'bg-rose-100');
+                setTimeout(() => element.classList.remove('animate-shake', 'bg-rose-100'), 400);
+            }
+        }
+
+        function resetAktivitas() {
+            initAktivitas();
+        }
+
+        initAktivitas();
+
+        // Mini Game Logic
+        const gameQuestions = [
+            { question: "Siapakah Nabi pertama yang diciptakan oleh Allah Swt.?", options: ["Nabi Adam a.s.", "Nabi Nuh a.s.", "Nabi Ibrahim a.s."], correct: 0 },
+            { question: "Nabi dan rasul yang wajib diketahui jumlahnya ada ...", options: ["10 orang", "25 orang", "30 orang"], correct: 1 },
+            { question: "Perkara luar biasa yang diberikan Allah Swt. kepada nabi disebut ...", options: ["Sihir", "Mukjizat", "Mimpi"], correct: 1 },
+            { question: "Kitab suci Al-Qur'an adalah mukjizat terbesar Nabi ...", options: ["Nabi Musa a.s.", "Nabi Isa a.s.", "Nabi Muhammad saw."], correct: 2 },
+            { question: "Sebagian uang saku yang disisihkan untuk ditabung mencerminkan hidup ...", options: ["Sederhana", "Boros", "Berlebihan"], correct: 0 }
+        ];
+
+        let currentGameIndex = 0;
+        let currentGameScore = 0;
+
+        function loadGameQuestion() {
+            if (currentGameIndex >= gameQuestions.length) {
+                document.getElementById('game-card-container').innerHTML = `
+                    <div class="text-center py-6">
+                        <div class="text-5xl mb-3">🏆</div>
+                        <h3 class="font-comic text-2xl font-bold text-slate-800">Permainan Selesai!</h3>
+                        <p class="text-slate-600 text-sm mt-2">Skor Mini Game kamu: <span class="text-emerald-600 font-bold">${currentGameScore}</span> dari 5</p>
+                        <button onclick="restartGame()" class="mt-4 px-6 py-2.5 bg-sky-500 text-white font-bold rounded-xl shadow-md">Main Lagi</button>
+                    </div>
+                `;
+                return;
+            }
+
+            const q = gameQuestions[currentGameIndex];
+            document.getElementById('game-badge').innerText = `Soal No. ${currentGameIndex + 1} dari 5`;
+            document.getElementById('game-question').innerText = q.question;
+            
+            const optionsContainer = document.getElementById('game-options');
+            optionsContainer.innerHTML = '';
+
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "p-4 bg-white hover:bg-sky-50 border border-slate-200 rounded-2xl font-bold text-sm text-slate-700 shadow-xs transition-all text-center";
+                btn.innerText = opt;
+                btn.onclick = () => checkGameAnswer(idx, q.correct);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function checkGameAnswer(selected, correct) {
+            if (selected === correct) {
+                showToast("Jawaban Benar! Hebat!", "success");
+                currentGameScore += 20;
+                document.getElementById('current-game-score').innerText = currentGameScore;
+            } else {
+                showToast("Kurang tepat, tetap semangat!", "error");
+            }
+            currentGameIndex++;
+            loadGameQuestion();
+        }
+
+        function restartGame() {
+            currentGameIndex = 0;
+            currentGameScore = 0;
+            document.getElementById('current-game-score').innerText = '0';
+            // Restore game container HTML structure if reset
+            document.getElementById('game-card-container').innerHTML = `
+                <span id="game-badge" class="bg-sky-500 text-white text-xs font-bold px-3 py-1 rounded-full mb-3">Soal No. 1 dari 5</span>
+                <div id="game-icon" class="text-5xl text-sky-600 mb-3">👑</div>
+                <h3 id="game-question" class="font-comic text-xl font-bold text-slate-800 text-center mb-6">Siapakah Nabi pertama yang diciptakan Allah Swt.?</h3>
+                <div id="game-options" class="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full"></div>
+            `;
+            loadGameQuestion();
+        }
+
+        loadGameQuestion();
+
+        // Latihan Formatif Data
+        const latihanData = [
+            { q: "Nabi dan rasul merupakan utusan ...", options: ["Allah Swt.", "Manusia", "Malaikat"], correct: 0 },
+            { q: "Rasul wajib menyampaikan wahyu kepada ...", options: ["Umatnya", "Dirinya sendiri", "Keluarganya saja"], correct: 0 },
+            { q: "Tongkat yang menjadi ular besar adalah mukjizat Nabi ...", options: ["Nabi Nuh a.s.", "Nabi Musa a.s.", "Nabi Ibrahim a.s."], correct: 1 },
+            { q: "Suka menabung dan tidak boros termasuk hidup ...", options: ["Sederhana", "Mewah", "Berlebihan"], correct: 0 }
+        ];
+
+        function initLatihan() {
+            const container = document.getElementById('latihan-container');
+            container.innerHTML = '';
+
+            latihanData.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = "bg-slate-50 p-5 rounded-2xl border border-slate-200 flex flex-col gap-3";
+                card.innerHTML = `
+                    <h4 class="font-bold text-slate-800 text-sm">${index + 1}. ${item.q}</h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                        ${item.options.map((opt, optIdx) => `
+                            <button onclick="checkLatihan(this, ${optIdx}, ${item.correct})" class="p-2.5 bg-white hover:bg-sky-100 border border-slate-200 rounded-xl text-xs font-bold text-slate-700 transition-all">${opt}</button>
+                        `).join('')}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function checkLatihan(btn, selected, correct) {
+            const parent = btn.parentElement;
+            parent.querySelectorAll('button').forEach(b => {
+                b.className = "p-2.5 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-700 pointer-events-none";
+            });
+
+            if (selected === correct) {
+                btn.className = "p-2.5 bg-emerald-500 text-white rounded-xl text-xs font-bold pointer-events-none";
+                showToast("Benar sekali!", "success");
+            } else {
+                btn.className = "p-2.5 bg-rose-500 text-white rounded-xl text-xs font-bold pointer-events-none";
+                showToast("Kurang tepat. Coba perhatikan materi lagi ya!", "error");
+            }
+        }
+
+        initLatihan();
+
+        // Quiz Akhir Data (10 soal)
+        const quizQuestions = [
+            { q: "Nabi dan rasul merupakan utusan ...", options: ["Allah Swt.", "Raja", "Pemimpin"], correct: 0, exp: "Nabi dan rasul adalah hamba pilihan dan utusan Allah Swt." },
+            { q: "Beriman kepada nabi dan rasul adalah rukun iman yang ke-...", options: ["Tiga", "Empat", "Lima"], correct: 1, exp: "Iman kepada nabi dan rasul adalah rukun iman keempat." },
+            { q: "Nabi menerima wahyu untuk ...", options: ["Umat manusia", "Dirinya sendiri", "Teman-temannya"], correct: 1, exp: "Nabi menerima wahyu untuk dirinya sendiri dan tidak wajib menyampaikan kepada umat." },
+            { q: "Rasul wajib menyampaikan wahyu kepada ...", options: ["Umatnya", "Malaikat", "Binatang"], correct: 0, exp: "Rasul memiliki kewajiban menyampaikan wahyu kepada umatnya." },
+            { q: "Jumlah nabi dan rasul yang wajib diketahui ada ...", options: ["20", "25", "30"], correct: 1, exp: "Ada 25 nabi dan rasul yang wajib diketahui oleh setiap Muslim." },
+            { q: "Perkara luar biasa yang diberikan Allah Swt. kepada nabi disebut ...", options: ["Mukjizat", "Sihir", "Karamah"], correct: 0, exp: "Mukjizat adalah perkara luar biasa untuk membuktikan kenabian." },
+            { q: "Mukjizat Nabi Nuh a.s. adalah membuat ...", options: ["Kapal besar", "Istana", "Jembatan"], correct: 0, exp: "Nabi Nuh a.s. membuat kapal yang sangat besar atas izin Allah." },
+            { q: "Tongkat yang berubah menjadi ular besar adalah mukjizat Nabi ...", options: ["Nabi Musa a.s.", "Nabi Isa a.s.", "Nabi Ibrahim a.s."], correct: 0, exp: "Tongkat ular besar adalah mukjizat Nabi Musa a.s." },
+            { q: "Kitab suci Al-Qur'an adalah mukjizat terbesar Nabi ...", options: ["Nabi Muhammad saw.", "Nabi Daud a.s.", "Nabi Idris a.s."], correct: 0, exp: "Al-Qur'an adalah mukjizat terbesar Nabi Muhammad saw." },
+            { q: "Suka menabung dan tidak boros termasuk perilaku hidup ...", options: ["Sederhana", "Mewah", "Sombong"], correct: 0, exp: "Hidup sederhana meneladani nabi dan rasul dengan cara tidak berlebihan." }
+        ];
+
+        let currentQuizIndex = 0;
+        let quizScore = 0;
+        let userAnswers = [];
+
+        function startQuiz() {
+            currentQuizIndex = 0;
+            quizScore = 0;
+            userAnswers = [];
+            document.getElementById('quiz-start-screen').classList.add('hidden');
+            document.getElementById('quiz-question-screen').classList.remove('hidden');
+            loadQuizQuestion();
+        }
+
+        function loadQuizQuestion() {
+            if (currentQuizIndex >= quizQuestions.length) {
+                showQuizResult();
+                return;
+            }
+
+            const q = quizQuestions[currentQuizIndex];
+            document.getElementById('quiz-counter').innerText = `Soal ${currentQuizIndex + 1} dari 10`;
+            document.getElementById('quiz-progress-bar').style.width = `${((currentQuizIndex + 1) / 10) * 100}%`;
+            document.getElementById('quiz-question-text').innerText = q.q;
+            document.getElementById('quiz-explanation-box').classList.add('hidden');
+            document.getElementById('quiz-next-btn').classList.add('hidden');
+
+            const container = document.getElementById('quiz-options-container');
+            container.innerHTML = '';
+
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "p-4 bg-white hover:bg-sky-50 border border-slate-200 rounded-2xl font-bold text-sm text-slate-700 shadow-xs transition-all text-left flex items-center justify-between";
+                btn.innerHTML = `<span>${opt}</span> <i class="fa-solid fa-circle text-xs text-slate-300"></i>`;
+                btn.onclick = () => selectQuizAnswer(idx, q.correct, q.exp, btn);
+                container.appendChild(btn);
+            });
+        }
+
+        function selectQuizAnswer(selected, correct, exp, btnElement) {
+            // Disable all options
+            const parent = document.getElementById('quiz-options-container');
+            parent.querySelectorAll('button').forEach(b => b.classList.add('pointer-events-none'));
+
+            if (selected === correct) {
+                btnElement.className = "p-4 bg-emerald-100 border border-emerald-400 rounded-2xl font-bold text-sm text-emerald-900 shadow-xs flex items-center justify-between";
+                quizScore += 10;
+                showToast("Jawaban Benar!", "success");
+            } else {
+                btnElement.className = "p-4 bg-rose-100 border border-rose-400 rounded-2xl font-bold text-sm text-rose-900 shadow-xs flex items-center justify-between";
+                showToast("Kurang tepat.", "error");
+            }
+
+            const expBox = document.getElementById('quiz-explanation-box');
+            expBox.innerHTML = `<b>Pembahasan:</b> ${exp}`;
+            expBox.classList.remove('hidden');
+
+            document.getElementById('quiz-next-btn').classList.remove('hidden');
+        }
+
+        function nextQuizQuestion() {
+            currentQuizIndex++;
+            loadQuizQuestion();
+        }
+
+        function showQuizResult() {
+            switchView('hasil');
+            document.getElementById('hasil-score-val').innerText = quizScore;
+            document.getElementById('hasil-correct-val').innerText = `${quizScore / 10} / 10`;
+
+            const statusTitle = document.getElementById('hasil-status-title');
+            const badgeVal = document.getElementById('hasil-badge-val');
+            const badgeIcon = document.getElementById('hasil-badge-icon');
+
+            if (quizScore >= 80) {
+                statusTitle.innerText = "Luar Biasa, Hebat Sekali!";
+                badgeVal.innerText = "Bintang 5 ⭐⭐⭐⭐⭐";
+                badgeIcon.innerText = "🏆";
+            } else if (quizScore >= 60) {
+                statusTitle.innerText = "Bagus, Tingkatkan Lagi!";
+                badgeVal.innerText = "Bintang 4 ⭐⭐⭐⭐";
+                badgeIcon.innerText = "🥈";
+            } else {
+                statusTitle.innerText = "Tetap Semangat Belajar!";
+                badgeVal.innerText = "Bintang 3 ⭐⭐⭐";
+                badgeIcon.innerText = "📚";
+            }
+        }
+
+        // Refleksi Logic
+        let selectedEmoji = '🤩';
+        function setRefleksiEmoji(emoji, btn) {
+            document.querySelectorAll('.ref-emoji-btn').forEach(b => {
+                b.className = "ref-emoji-btn w-16 h-16 rounded-2xl bg-slate-50 hover:bg-slate-100 border-2 border-slate-200 text-3xl flex items-center justify-center transition-all cursor-pointer";
+            });
+            btn.className = "ref-emoji-btn w-16 h-16 rounded-2xl bg-emerald-100 border-2 border-emerald-500 text-3xl flex items-center justify-center transition-all cursor-pointer shadow-md";
+            selectedEmoji = emoji;
+        }
+
+        function submitRefleksi() {
+            showToast("Terima kasih! Refleksi kamu telah tersimpan.", "success");
+            setTimeout(() => {
+                switchView('beranda');
+            }, 1500);
+        }
+    </script>
+</body>
+</html>
